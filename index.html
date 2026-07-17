@@ -203,7 +203,7 @@
   }
   @media(prefers-reduced-motion:reduce){*{animation:none!important}.reveal{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
   /* ---------- CASE MODAL ---------- */
-  dialog#caseModal{width:min(1120px,94vw);height:92vh;max-width:none;max-height:none;padding:0;border:1px solid var(--line-2);border-radius:22px;background:var(--bg);overflow:hidden;box-shadow:0 30px 90px rgba(0,0,0,.65)}
+  dialog#caseModal{position:fixed;inset:0;margin:auto;width:min(1120px,94vw);height:92vh;max-width:none;max-height:none;padding:0;border:1px solid var(--line-2);border-radius:22px;background:var(--bg);overflow:hidden;box-shadow:0 30px 90px rgba(0,0,0,.65)}
   dialog#caseModal::backdrop{background:rgba(6,4,14,.74);backdrop-filter:blur(5px)}
   dialog#caseModal[open]{animation:modalIn .3s cubic-bezier(.16,1,.3,1)}
   @keyframes modalIn{from{opacity:0;transform:translateY(16px) scale(.985)}to{opacity:1;transform:none}}
