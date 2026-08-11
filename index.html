@@ -212,6 +212,8 @@
   #caseFrame{width:100%;height:100%;border:0;display:block}
   @media(max-width:820px){dialog#caseModal{width:100vw;height:100vh;border-radius:0;border:none}}
 
+  .stackcat{margin-bottom:22px}
+  .stackcat .cat{font-family:var(--mono);font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin-bottom:11px;display:block}
 </style>
 </head>
 <body>
@@ -224,6 +226,7 @@
       <a href="#sobre" data-i18n="nav_about">Sobre</a>
       <a href="#trajetoria" data-i18n="nav_path">Trajetória</a>
       <a href="#servicos" data-i18n="nav_services">O que faço</a>
+      <a href="#metodo" data-i18n="nav_method">Método</a>
       <a href="#projetos" data-i18n="nav_work">Projetos</a>
     </nav>
     <div style="display:flex;gap:12px;align-items:center">
@@ -246,7 +249,7 @@
       <span data-i18n="h1a">13 anos desenhando produtos.</span><br>
       <span class="grad" data-i18n="h1b">Do conceito</span> <span class="arrow">→</span> <span class="grad" data-i18n="h1c">ao deploy.</span>
     </h1>
-    <p class="lede reveal" style="transition-delay:.12s" data-i18n="lede">Product Designer sênior e cofundadora da <strong>RISE</strong>. Não paro no Figma: levo o projeto da estratégia de marca ao <strong>produto no ar</strong>, gerando resultado.</p>
+    <p class="lede reveal" style="transition-delay:.12s" data-i18n="lede">Product Designer sênior e cofundadora da <strong>RISE</strong>. Uno <strong>design, dados e código</strong> — e uso <strong>IA em cada etapa</strong> para levar o projeto da estratégia ao <strong>produto no ar</strong>, mais rápido.</p>
     <div class="cta-row reveal" style="transition-delay:.18s">
       <a href="#projetos" class="btn btn-primary"><span data-i18n="cta1">Ver projetos</span> →</a>
       <a href="#contato" class="btn btn-ghost" data-i18n="cta2">Fale comigo</a>
@@ -317,6 +320,25 @@
 </section>
 
 <!-- PROJETOS -->
+<!-- MÉTODO / IA -->
+<section id="metodo" class="alt">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow" data-i18n="eb_metodo">Como eu trabalho</span>
+      <h2 data-i18n="metodo_h">Design potencializado por IA.</h2>
+      <p data-i18n="metodo_p">O diferencial de um sênior hoje não é só repertório — é velocidade. Uso <strong>IA, dados e código</strong> em cada etapa para chegar a resultados melhores, mais rápido. É o que um time de produto moderno precisa.</p>
+    </div>
+    <div class="svc-grid reveal">
+      <div class="svc"><span class="num">01</span><h3 data-i18n="m1_h">Pesquisa &amp; síntese com IA</h3><p data-i18n="m1_p">Acelero discovery, análise qualitativa e síntese de insights com LLMs — sem abrir mão do rigor de pesquisa.</p></div>
+      <div class="svc"><span class="num">02</span><h3 data-i18n="m2_h">Ideação &amp; protótipo</h3><p data-i18n="m2_p">Gero e itero variações em horas, não semanas — validando direções cedo e barato.</p></div>
+      <div class="svc"><span class="num">03</span><h3 data-i18n="m3_h">Decisões por dados</h3><p data-i18n="m3_p">SQL, analytics e instrumentação (GA4, Clarity, GTM, Hotjar) para decidir com evidência, não achismo.</p></div>
+      <div class="svc"><span class="num">04</span><h3 data-i18n="m4_h">Do design ao código</h3><p data-i18n="m4_p">Prototipo e publico: entrego o produto no ar, com IA acelerando o desenvolvimento.</p></div>
+      <div class="svc"><span class="num">05</span><h3 data-i18n="m5_h">Fluxo mais rápido</h3><p data-i18n="m5_p">Menos retrabalho, ciclos curtos e entrega contínua — a empresa chega ao resultado antes.</p></div>
+      <div class="svc feat"><span class="num">&#8594;</span><h3 data-i18n="m6_h">Feito com IA.</h3><p data-i18n="m6_p">Este próprio portfólio foi concebido e construído em parceria com IA — do conceito ao deploy.</p></div>
+    </div>
+  </div>
+</section>
+
 <section id="projetos" class="alt">
   <div class="wrap">
     <div class="section-head reveal">
@@ -384,10 +406,21 @@
   <div class="wrap">
     <div class="section-head reveal">
       <span class="eyebrow" data-i18n="eb_stack">Ferramentas</span>
-      <h2 data-i18n="stack_h">O que uso pra construir.</h2>
+      <h2 data-i18n="stack_h">Meu toolkit — atualizado.</h2>
     </div>
-    <div class="stack-wrap reveal">
-      <span class="chip">Figma</span><span class="chip">HTML / CSS / JS</span><span class="chip">Supabase</span><span class="chip">Vercel</span><span class="chip">GitHub</span><span class="chip">Meta Ads</span><span class="chip">Kommo CRM</span><span class="chip">SEO</span><span class="chip">Mercado Pago</span><span class="chip">IA / Claude</span><span class="chip">UX Research</span><span class="chip">Design Thinking</span>
+    <div class="reveal">
+      <div class="stackcat"><span class="cat" data-i18n="cat_design">Design &amp; UX</span><div class="stack-wrap">
+        <span class="chip">Figma</span><span class="chip">Design System</span><span class="chip">Adobe XD</span><span class="chip">Sketch</span><span class="chip">UX Research</span><span class="chip">Design Thinking</span><span class="chip">Prototipação</span>
+      </div></div>
+      <div class="stackcat"><span class="cat" data-i18n="cat_data">Dados &amp; IA</span><div class="stack-wrap">
+        <span class="chip">IA / LLMs</span><span class="chip">Claude</span><span class="chip">Prompt Engineering</span><span class="chip">SQL</span><span class="chip">GA4</span><span class="chip">Google Tag Manager</span><span class="chip">Microsoft Clarity</span><span class="chip">Hotjar</span><span class="chip">Dovetail</span>
+      </div></div>
+      <div class="stackcat"><span class="cat" data-i18n="cat_dev">Dev &amp; Deploy</span><div class="stack-wrap">
+        <span class="chip">HTML / CSS / JS</span><span class="chip">GitHub</span><span class="chip">Vercel</span><span class="chip">Supabase</span>
+      </div></div>
+      <div class="stackcat"><span class="cat" data-i18n="cat_growth">Growth &amp; CRM</span><div class="stack-wrap">
+        <span class="chip">Meta Ads</span><span class="chip">Kommo CRM</span><span class="chip">SEO</span><span class="chip">Mercado Pago</span>
+      </div></div>
     </div>
   </div>
 </section>
@@ -417,10 +450,10 @@
 
 <script>
   const i18n={en:{
-    nav_about:"About",nav_path:"Path",nav_services:"Services",nav_work:"Work",nav_talk:"Get in touch",
+    nav_about:"About",nav_path:"Path",nav_services:"Services",nav_method:"Method",nav_work:"Work",nav_talk:"Get in touch",
     status:"Manaus, BR · available for new projects",
     h1a:"13 years designing products.",h1b:"From concept",h1c:"to deploy.",
-    lede:"Senior Product Designer and co-founder of <strong>RISE</strong>. I don't stop at Figma: I take a project from brand strategy to a <strong>shipped product</strong> that drives results.",
+    lede:"Senior Product Designer and co-founder of <strong>RISE</strong>. I blend <strong>design, data and code</strong> — using <strong>AI at every step</strong> to take a project from strategy to a <strong>shipped product</strong>, faster.",
     cta1:"See work",cta2:"Get in touch",trusted:"Where I've been",
     eb_about:"About",about_h:"Between craft and code.",
     about_p1:"I've been a product designer for 13+ years, across some of the country's biggest research and tech centers — <strong>Samsung, Microsoft, ClearSale, Eldorado</strong>. I started in research and discovery, learning to design products from data and real user behavior.",
@@ -453,7 +486,15 @@
     pd_sg_h:"AR Easter Egg Hunt",pd_sg:"Mobile app with augmented reality to boost mall foot traffic at Easter. End-to-end UX/UI, from flow to interface.",
     pd_dm_h:"Descubra Manaus · AR/VR",pd_dm:"Immersive tourism: a citywide treasure hunt in AR, collecting landmark postcards and projecting them at home.",
     br_meta:"Selection · posters & identity",br_h:"Graphic pieces",br_p:"Posters, banners and visual systems. Full collection on Behance — we pull the best pieces here with real imagery.",
-    eb_stack:"Tools",stack_h:"What I build with.",
+    eb_stack:"Tools",stack_h:"My toolkit — up to date.",
+    cat_design:"Design & UX",cat_data:"Data & AI",cat_dev:"Dev & Deploy",cat_growth:"Growth & CRM",
+    eb_metodo:"How I work",metodo_h:"Design supercharged by AI.",metodo_p:"A senior's edge today isn't just craft — it's speed. I use <strong>AI, data and code</strong> at every step to reach better results, faster. That's what a modern product team needs.",
+    m1_h:"Research & synthesis with AI",m1_p:"I speed up discovery, qualitative analysis and insight synthesis with LLMs — without giving up research rigor.",
+    m2_h:"Ideation & prototyping",m2_p:"I generate and iterate variations in hours, not weeks — validating early and cheap.",
+    m3_h:"Data-driven decisions",m3_p:"SQL, analytics and instrumentation (GA4, Clarity, GTM, Hotjar) to decide on evidence, not guesswork.",
+    m4_h:"From design to code",m4_p:"I prototype and ship: I deliver the live product, with AI accelerating development.",
+    m5_h:"A faster workflow",m5_p:"Less rework, short cycles and continuous delivery — the company reaches the result sooner.",
+    m6_h:"Built with AI.",m6_p:"This very portfolio was conceived and built in partnership with AI — from concept to deploy.",
     eb_contact:"Contact",contact_h:"Let's get your idea <span class='grad'>off the ground</span>.",contact_p:"From first sketch to a live product. Reach out and let's talk.",
     foot_rise:"co-founder of RISE ↗"
   }};
