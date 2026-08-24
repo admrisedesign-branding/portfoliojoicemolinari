@@ -692,5 +692,184 @@
     window.addEventListener('langchange',e=>apply(e.detail));
   })();
 </script>
+<!-- ═══════════════════════════════════════════════════════════
+     MOVIMENTO — colar UMA VEZ, logo antes de </body>
+     Não altera nenhum HTML existente. Tudo é feito por JS
+     em cima dos seletores que já estão no arquivo.
+     Para remover: apague este bloco inteiro. Nada mais muda.
+     ═══════════════════════════════════════════════════════════ -->
+<style>
+/* 1. barra de progresso da leitura */
+#mo-progresso{
+  position:fixed;top:0;left:0;height:2px;width:100%;z-index:999;
+  background:linear-gradient(90deg,#9384FF,#C9A7FF);
+  transform:scaleX(0);transform-origin:0 50%;pointer-events:none;
+}
+
+/* 2. brilho que segue o cursor (só no fundo escuro, só ponteiro fino) */
+#mo-brilho{
+  position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0;transition:opacity .8s ease;
+  background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),
+             rgba(147,132,255,.10),transparent 62%);
+}
+body.mo-mouse #mo-brilho{opacity:1}
+
+/* 3. hero: cada linha sobe de dentro de uma máscara */
+.mo-mask{display:block;overflow:hidden}
+.mo-mask > span{
+  display:block;transform:translateY(105%);
+  animation:mo-sobe 1s cubic-bezier(.16,1,.3,1) forwards;
+}
+.mo-mask:nth-of-type(2) > span{animation-delay:.10s}
+.mo-mask:nth-of-type(3) > span{animation-delay:.20s}
+@keyframes mo-sobe{to{transform:translateY(0)}}
+
+/* 4. escada: atraso crescente nos cards e nas linhas da tabela */
+.mo-atraso-1{transition-delay:.08s!important}
+.mo-atraso-2{transition-delay:.16s!important}
+.mo-atraso-3{transition-delay:.24s!important}
+
+/* 5. linhas do "No ar agora" revelando uma a uma */
+#noar tr.mo-linha{opacity:0;transform:translateY(14px);
+  transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1)}
+#noar tr.mo-linha.mo-dentro{opacity:1;transform:none}
+
+/* 6. header encolhe depois do hero */
+header{transition:padding .35s ease,backdrop-filter .35s ease,background .35s ease}
+body.mo-rolou header{backdrop-filter:blur(14px);background:rgba(14,10,27,.72)}
+
+/* 7. rede de segurança: se o JS falhar, nada fica invisível */
+.no-js .reveal, .mo-resgate .reveal{opacity:1!important;transform:none!important}
+
+@media (prefers-reduced-motion:reduce){
+  .mo-mask > span{transform:none;animation:none}
+  #noar tr.mo-linha{opacity:1;transform:none}
+  #mo-brilho{display:none}
+}
+</style>
+
+<script>
+(function(){
+function inicia(){
+  var reduzido = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- 0. rede de segurança: em 3s, o que não revelou, revela ---- */
+  setTimeout(function(){
+    var presos = document.querySelectorAll('.reveal:not(.in)');
+    if(presos.length && !document.querySelector('.reveal.in')){
+      document.body.classList.add('mo-resgate');
+    }
+  },3000);
+
+  /* ---- 1. barra de progresso ---- */
+  var barra = document.createElement('div');
+  barra.id = 'mo-progresso';
+  document.body.appendChild(barra);
+
+  /* ---- 2. brilho do cursor ---- */
+  var brilho = document.createElement('div');
+  brilho.id = 'mo-brilho';
+  document.body.insertBefore(brilho, document.body.firstChild);
+
+  /* ---- 3. hero: quebrar o h1 em linhas mascaradas ----
+     O h1 tem spans separados por <br>. Agrupo tudo que está
+     entre um <br> e outro e embrulho em uma máscara. */
+  var h1 = document.querySelector('h1');
+  if(h1 && !reduzido){
+    var grupos = [[]], filhos = Array.prototype.slice.call(h1.childNodes);
+    filhos.forEach(function(n){
+      if(n.nodeName === 'BR'){ grupos.push([]); }
+      else { grupos[grupos.length-1].push(n); }
+    });
+    if(grupos.length > 1){
+      h1.classList.remove('reveal');          // sai do sistema antigo
+      h1.style.opacity = '1';
+      h1.style.transform = 'none';
+      h1.innerHTML = '';
+      grupos.forEach(function(g){
+        if(!g.length) return;
+        var mask = document.createElement('span'); mask.className = 'mo-mask';
+        var linha = document.createElement('span');
+        g.forEach(function(n){ linha.appendChild(n); });
+        mask.appendChild(linha);
+        h1.appendChild(mask);
+      });
+    }
+  }
+
+  /* ---- 4. escada nos cards de projeto ---- */
+  var cards = document.querySelectorAll('#projetos a.card');
+  Array.prototype.forEach.call(cards, function(c,i){
+    c.classList.add('mo-atraso-' + (i % 3 + 1));
+  });
+
+  /* ---- 5. linhas do "No ar agora", uma a uma ---- */
+  var linhas = document.querySelectorAll('#noar table tr');
+  if(linhas.length && !reduzido){
+    Array.prototype.forEach.call(linhas, function(tr,i){
+      if(tr.querySelector('th')) return;       // pula o cabeçalho
+      tr.classList.add('mo-linha');
+      tr.style.transitionDelay = (i * 0.07) + 's';
+    });
+    var obsLinhas = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('mo-dentro'); obsLinhas.unobserve(e.target); }
+      });
+    },{threshold:.15});
+    Array.prototype.forEach.call(document.querySelectorAll('#noar tr.mo-linha'), function(tr){
+      obsLinhas.observe(tr);
+    });
+  }
+
+  if(reduzido) return;
+
+  /* ---- 6. um único laço de rolagem: barra + header ---- */
+  var pedido = false;
+  function desenha(){
+    pedido = false;
+    var total = document.body.scrollHeight - innerHeight;
+    var y = window.scrollY || document.body.scrollTop || 0;
+    barra.style.transform = 'scaleX(' + (total > 0 ? y/total : 0) + ')';
+    document.body.classList.toggle('mo-rolou', y > 80);
+  }
+  function aoRolar(){ if(!pedido){ pedido = true; requestAnimationFrame(desenha); } }
+  addEventListener('scroll', aoRolar, {passive:true});
+  document.body.addEventListener('scroll', aoRolar, {passive:true}); // body é o scroller aqui
+  addEventListener('resize', aoRolar);
+  desenha();
+
+  /* ---- 7. brilho + botão magnético (só ponteiro fino) ---- */
+  if(matchMedia('(pointer:fine)').matches){
+    document.body.classList.add('mo-mouse');
+    addEventListener('mousemove', function(e){
+      brilho.style.setProperty('--mx', e.clientX + 'px');
+      brilho.style.setProperty('--my', e.clientY + 'px');
+    },{passive:true});
+
+    var cta = document.querySelector('header a[href*="contato"], header .btn, header a:last-of-type');
+    if(cta){
+      cta.style.willChange = 'transform';
+      cta.style.transition = 'transform .25s cubic-bezier(.16,1,.3,1)';
+      addEventListener('mousemove', function(e){
+        var r = cta.getBoundingClientRect();
+        var dx = e.clientX - (r.left + r.width/2);
+        var dy = e.clientY - (r.top + r.height/2);
+        cta.style.transform = Math.hypot(dx,dy) < 130
+          ? 'translate(' + dx*.22 + 'px,' + dy*.22 + 'px)'
+          : '';
+      },{passive:true});
+    }
+  }
+}
+
+/* espera o DOM existir — assim o bloco funciona colado em
+   qualquer lugar do arquivo, inclusive dentro do <head> */
+if(document.readyState === 'loading'){
+  document.addEventListener('DOMContentLoaded', inicia);
+} else {
+  inicia();
+}
+})();
+</script>
 </body>
 </html>
