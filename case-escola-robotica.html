@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Case · Escola de robótica infantil — Da audiência à matrícula · Joice Molinari</title>
+<meta name="description" content="Funil ponta a ponta de uma escola de robótica infantil: mídia, site, formulário com pontuação, CRM, atendimento, recepção e consentimento dos responsáveis. Estudo de caso por Joice Molinari.">
+<meta property="og:title" content="Escola de robótica infantil — Da audiência à matrícula">
+<meta property="og:description" content="Estudo de caso · Produto ponta a ponta · Growth &amp; CRM · RISE.">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0B0B14; --ink:#EDEBF5; --soft:#B7B4CC; --dim:#6B6885;
+  --accent:#B0A2FF; --blue:#6E8CFF; --pink:#FF9ECF; --good:#6FE3A3;
+  --line:rgba(176,162,255,.18);
+  --wrap:840px;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"DM Sans",system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;}
+
+/* progresso */
+#progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:50;
+  background:linear-gradient(90deg,var(--blue),var(--accent),var(--pink));transition:width .1s linear;}
+
+/* topbar */
+.topbar{position:sticky;top:0;z-index:40;backdrop-filter:blur(10px);
+  background:rgba(11,11,20,.72);border-bottom:1px solid rgba(176,162,255,.1);}
+.topbar .inner{max-width:var(--wrap);margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:14px;}
+.back{appearance:none;background:none;border:1px solid var(--line);color:var(--soft);cursor:pointer;
+  font:inherit;font-size:13.5px;padding:7px 14px;border-radius:999px;transition:.2s;}
+.back:hover{color:#fff;border-color:var(--accent);}
+.back:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+.topbar .who{font-size:13px;color:var(--dim);margin-left:auto;}
+
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px;}
+section{padding:64px 0;}
+.divide{border:0;border-top:1px solid rgba(176,162,255,.12);margin:0;}
+
+/* hero */
+.chero{padding:78px 0 34px;}
+.eyebrow{display:inline-block;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:18px;}
+h1{font-size:clamp(34px,6.4vw,60px);line-height:1.03;margin:0 0 20px;font-weight:600;letter-spacing:-.03em;}
+.tag{font-size:clamp(17px,2.3vw,21px);line-height:1.55;color:#D6D3E8;margin:0 0 30px;max-width:62ch;}
+.meta{display:flex;flex-wrap:wrap;gap:10px 26px;font-size:13.5px;color:var(--dim);}
+.meta b{color:var(--soft);font-weight:500;}
+
+.sec-num{display:block;font-size:12px;letter-spacing:.2em;color:var(--accent);margin-bottom:12px;}
+h2{font-size:clamp(26px,4.2vw,38px);line-height:1.12;margin:0 0 18px;font-weight:600;letter-spacing:-.02em;}
+h3{font-size:16px;margin:0 0 8px;font-weight:600;color:#fff;}
+p{line-height:1.68;color:var(--soft);font-size:16.5px;margin:0 0 16px;}
+.lead{font-size:clamp(17px,2.1vw,19.5px);color:#D6D3E8;}
+strong{color:#fff;font-weight:600;}
+.quote{margin:26px 0;padding:20px 22px;border-left:2px solid var(--accent);
+  background:linear-gradient(90deg,rgba(176,162,255,.07),transparent);
+  font-size:18px;line-height:1.5;color:#fff;}
+
+/* listas de decisão */
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:24px;}
+.card{border:1px solid var(--line);border-radius:14px;padding:20px;background:rgba(255,255,255,.02);}
+.card p{font-size:14.5px;margin:0;}
+
+/* diagrama */
+.diagframe{border:1px solid var(--line);border-radius:16px;padding:24px 18px;margin-top:26px;
+  background:linear-gradient(180deg,rgba(176,162,255,.06),rgba(176,162,255,0));}
+.diagframe svg{width:100%;height:auto;display:block;overflow:visible;}
+.figcap{margin:12px 2px 0;font-size:13px;color:var(--dim);}
+
+/* reveals */
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.in{opacity:1;transform:none;}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}}
+
+footer{padding:56px 0 80px;color:var(--dim);font-size:13.5px;}
+footer a{color:var(--accent);}
+
+@media (max-width:640px){
+  section{padding:52px 0;}
+  .cards{grid-template-columns:1fr;}
+}
+
+/* ============ bloco de resultados (escopo próprio) ============ */
+.mrres{--mr-accent:var(--accent);--mr-up:var(--good);--mr-dim:#8A87A6;--mr-line:var(--line);}
+.mrres .mr-cross{margin:34px 0 8px;padding:26px 22px 18px;border:1px solid var(--mr-line);border-radius:16px;
+  background:linear-gradient(180deg,rgba(176,162,255,.06),rgba(176,162,255,0));}
+.mrres .mr-cross h3{margin:0 0 4px;}
+.mrres .mr-cross .mr-sub{margin:0 0 16px;font-size:13px;color:var(--mr-dim);}
+.mrres .mr-cross svg{width:100%;height:auto;display:block;overflow:visible;}
+.mrres .mr-path{stroke-dasharray:1;stroke-dashoffset:1;}
+.mrres.in .mr-path{animation:mr-draw 1.4s ease-out forwards;}
+.mrres.in .mr-path.b{animation-delay:.25s;}
+@keyframes mr-draw{to{stroke-dashoffset:0;}}
+@media (prefers-reduced-motion:reduce){.mrres .mr-path{animation:none!important;stroke-dashoffset:0;}}
+.mrres .mr-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:26px 0 8px;}
+.mrres .mr-card{border:1px solid var(--mr-line);border-radius:14px;padding:18px;background:rgba(255,255,255,.02);}
+.mrres .mr-k{font-size:12.5px;color:var(--mr-dim);margin:0 0 8px;}
+.mrres .mr-v{font-size:clamp(22px,3.4vw,30px);font-weight:600;color:#fff;letter-spacing:-.02em;line-height:1.1;}
+.mrres .mr-from{color:#6B6885;font-weight:400;}
+.mrres .mr-arrow{color:var(--mr-accent);padding:0 6px;font-weight:400;}
+.mrres .mr-delta{display:inline-block;margin-top:9px;font-size:12px;padding:3px 9px;border-radius:999px;
+  background:rgba(111,227,163,.12);color:var(--mr-up);}
+.mrres .mr-roi{margin:30px 0 0;padding:24px 22px;border-radius:16px;border:1px solid var(--mr-line);background:rgba(255,255,255,.02);}
+.mrres .mr-big{font-size:clamp(30px,4.8vw,44px);font-weight:600;color:#fff;letter-spacing:-.03em;line-height:1.05;}
+.mrres .mr-big em{font-style:normal;color:var(--mr-accent);}
+.mrres .mr-roi p{margin:12px 0 0;font-size:14.5px;}
+.mrres .mr-src{margin-top:26px;font-size:12.5px;color:#6B6885;line-height:1.6;}
+@media (max-width:640px){.mrres .mr-grid{grid-template-columns:1fr;}}
+/* portas de entrada */
+.doors{margin:26px 0 0;padding:22px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.02);display:grid;gap:14px;}
+.door{display:grid;grid-template-columns:190px 1fr 56px;align-items:center;gap:14px;}
+.door-k{font-size:14px;color:var(--soft);}
+.door-bar{height:10px;border-radius:999px;background:rgba(176,162,255,.1);overflow:hidden;}
+.door-bar i{display:block;height:100%;min-width:4px;border-radius:999px;background:var(--dim);}
+.door.hi .door-k{color:#fff;}
+.door.hi .door-bar i{background:linear-gradient(90deg,var(--blue),var(--accent));}
+.door-v{font-size:16px;font-weight:600;color:#fff;text-align:right;}
+@media (max-width:640px){.door{grid-template-columns:1fr 52px;}.door-k{grid-column:1/-1;}}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<div class="topbar">
+  <div class="inner">
+    <button class="back" id="back">← Voltar</button>
+    <span class="who">Joice Molinari · Estudo de caso</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<header class="chero">
+  <div class="wrap reveal">
+    <span class="eyebrow">Estudo de caso · Produto ponta a ponta · Growth &amp; CRM</span>
+    <h1>Da audiência à matrícula</h1>
+    <p class="tag">Uma escola de robótica infantil tinha atenção — um Instagram ativo, aulas cheias de história para contar — e mesmo assim não sabia de onde vinha um aluno novo. Montei o caminho inteiro: mídia, site, formulário que pontua, CRM e medição. Quando os dados mostraram que o próximo passo era o atendimento, o funil passou a incluir o atendimento também.</p>
+    <div class="meta">
+      <span><b>Papel:</b> produto e operação do funil · discovery, decisão, construção e medição</span>
+      <span><b>Cliente:</b> escola de robótica infantil (via RISE)</span>
+      <span><b>Período:</b> 2026 — em operação</span>
+      <span><b>Stack:</b> HTML/JS · Vercel · Supabase · Kommo · Meta Ads · GA4 · GTM</span>
+    </div>
+  </div>
+</header>
+
+<hr class="divide">
+
+<!-- 01 CONTEXTO -->
+<section>
+  <div class="wrap reveal">
+    <span class="sec-num">01</span>
+    <h2>Contexto</h2>
+    <p class="lead">Robótica e programação para crianças de 5 a 14 anos. Quem decide é o pai ou a mãe, entre 28 e 50 anos, e a decisão é cara e lenta: envolve visitar a escola, ver a aula, confiar.</p>
+    <p>O contato acontecia quase todo no WhatsApp. Alguém via um Reels, mandava mensagem, conversava — e ali a informação morria. Não existia registro de quantas pessoas chegaram, de quantas voltaram, nem de quem estava perto de fechar. A escola não tinha um problema de audiência. Tinha um problema de <strong>memória</strong>.</p>
+  </div>
+</section>
+
+<hr class="divide">
+
+<!-- 02 DESAFIO -->
+<section>
+  <div class="wrap reveal">
+    <span class="sec-num">02</span>
+    <h2>O desafio</h2>
+    <p>Transformar interesse disperso em um caminho observável — sem exigir que a equipe comercial mudasse de rotina. Eles vivem no WhatsApp e iam continuar vivendo. Qualquer solução que dependesse de disciplina nova ia falhar na segunda semana.</p>
+    <div class="quote">Como registrar cada pessoa interessada sem pedir a ninguém que trabalhe diferente?</div>
+    <p>A resposta foi colocar a captura e a qualificação <strong>antes</strong> da conversa, não dentro dela. A pessoa responde três ou quatro perguntas curtas e só então cai no WhatsApp — já registrada, já pontuada. O comercial recebe o mesmo tipo de contato de sempre, só que agora com contexto.</p>
+  </div>
+</section>
+
+<hr class="divide">
+
+<!-- 03 PAPEL -->
+<section>
+  <div class="wrap reveal">
+    <span class="sec-num">03</span>
+    <h2>Meu papel</h2>
+    <p>Atuei do diagnóstico à operação, sozinha nas decisões de produto e com apoio de estratégia na frente comercial. Não era um projeto de tela: era desenhar o sistema e depois mantê-lo de pé.</p>
+    <div class="cards">
+      <div class="card"><h3>Produto e interface</h3><p>Site de conversão, formulário em etapas, arquitetura da informação e copy das perguntas.</p></div>
+      <div class="card"><h3>Modelo de qualificação</h3><p>Regras de pontuação por intenção, urgência e localização, com faixas de temperatura.</p></div>
+      <div class="card"><h3>Operação comercial</h3><p>Funil no CRM, campos personalizados, integração do formulário e roteiro por temperatura.</p></div>
+      <div class="card"><h3>Medição</h3><p>Pixel, GA4, evento de conversão, marcação de origem e leitura mensal dos números.</p></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divide">
+
+<!-- 04 O SISTEMA -->
+<section>
+  <div class="wrap reveal">
+    <span class="sec-num">04</span>
+    <h2>O sistema</h2>
+    <p>Duas portas de entrada, um único destino. Tudo que chega passa por um formulário que pontua e cai no CRM com a origem marcada — por isso é possível dizer, no fim do mês, qual anúncio virou aluno.</p>
+
+    <div class="diagframe">
+      <svg viewBox="0 0 720 260" role="img" aria-label="Fluxo: anúncios e perfil orgânico levam ao site ou ao WhatsApp, ambos passam pelo formulário com pontuação e caem no CRM, que leva à matrícula">
+        <defs>
+          <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M0,0 L10,5 L0,10 z" fill="#6E8CFF"/>
+          </marker>
+          <linearGradient id="g" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#6E8CFF"/><stop offset="1" stop-color="#B0A2FF"/>
+          </linearGradient>
+        </defs>
+        <g font-size="12.5" fill="#B7B4CC" text-anchor="middle">
+          <rect x="10" y="40" width="120" height="46" rx="10" fill="none" stroke="rgba(176,162,255,.3)"/>
+          <text x="70" y="62">Anúncios</text><text x="70" y="78" font-size="11" fill="#6B6885">4 campanhas</text>
+
+          <rect x="10" y="150" width="120" height="46" rx="10" fill="none" stroke="rgba(176,162,255,.3)"/>
+          <text x="70" y="172">Instagram</text><text x="70" y="188" font-size="11" fill="#6B6885">orgânico</text>
+
+          <rect x="190" y="40" width="120" height="46" rx="10" fill="none" stroke="rgba(176,162,255,.3)"/>
+          <text x="250" y="68">Site</text>
+
+          <rect x="190" y="150" width="120" height="46" rx="10" fill="none" stroke="rgba(176,162,255,.3)"/>
+          <text x="250" y="178">WhatsApp</text>
+
+          <rect x="370" y="88" width="140" height="60" rx="12" fill="rgba(176,162,255,.1)" stroke="url(#g)" stroke-width="1.5"/>
+          <text x="440" y="112" fill="#fff" font-weight="600">Formulário</text>
+          <text x="440" y="130" font-size="11" fill="#B0A2FF">pontua e classifica</text>
+
+          <rect x="570" y="40" width="140" height="60" rx="12" fill="none" stroke="rgba(176,162,255,.3)"/>
+          <text x="640" y="64" fill="#fff">CRM</text><text x="640" y="82" font-size="11" fill="#6B6885">funil de 7 etapas</text>
+
+          <rect x="570" y="150" width="140" height="52" rx="12" fill="rgba(111,227,163,.1)" stroke="rgba(111,227,163,.45)"/>
+          <text x="640" y="181" fill="#6FE3A3" font-weight="600">Matrícula</text>
+        </g>
+        <g stroke="#6E8CFF" stroke-width="1.4" fill="none" marker-end="url(#a)" opacity=".85">
+          <path d="M130,63 L186,63"/>
+          <path d="M130,173 L186,173"/>
+          <path d="M310,63 C345,63 345,110 366,112"/>
+          <path d="M310,173 C345,173 345,128 366,126"/>
+          <path d="M510,112 C540,112 545,74 566,72"/>
+          <path d="M640,100 L640,146"/>
+        </g>
+      </svg>
+      <p class="figcap">O formulário é o ponto obrigatório de passagem. É o que garante que ninguém entre sem deixar rastro.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divide">
+
+<!-- 05 DECISOES -->
+<section>
+  <div class="wrap reveal">
+    <span class="sec-num">05</span>
+    <h2>Três decisões que sustentam o resto</h2>
+
+    <h3>Pontuar por intenção, não por perfil</h3>
+    <p>A pontuação premia o que indica proximidade da decisão — pedir aula experimental pesa mais do que qualquer outro sinal; “só pesquisando” pesa pouco; indicação de conhecido pesa. Some-se a isso a região da cidade, que na prática funciona como leitura de contexto. O limite de “quente” ficou deliberadamente alto: prefiro poucos quentes de verdade a uma lista inteira em vermelho, que ninguém prioriza.</p>
+
+    <h3>Separar o funil novo do histórico antigo</h3>
+    <p>A escola já tinha uma base de contatos antiga sendo repescada. Se tudo entrasse no mesmo lugar, nenhum resultado seria atribuível. Criei um funil exclusivo para o que vem do digital — é o que torna possível afirmar que uma matrícula veio do trabalho, e não do acaso.</p>
+
+    <h3>Marcar a conversão no site antes de escalar a verba</h3>
+    <p>Antes do evento de conversão configurado, o formulário era invisível para o Analytics: dava para ver visita, não resultado. Instrumentar primeiro e investir depois evita o erro mais caro em mídia, que é otimizar no escuro.</p>
+  </div>
+</section>
+
+<hr class="divide">
+
+<!-- 06 RESULTADOS -->
+<section class="mrres">
+  <div class="wrap reveal">
+    <span class="sec-num">06</span>
+    <h2>Investimos mais e o lead ficou mais barato</h2>
+    <p class="lead">Do primeiro para o segundo mês de operação, a verba de mídia subiu <strong>158%</strong> — e o custo por lead <strong>caiu 74%</strong>. Escalar normalmente encarece a aquisição. Aqui aconteceu o contrário, porque o funil foi reestruturado junto com o investimento.</p>
+
+    <div class="mr-cross">
+      <h3>Junho → Julho de 2026</h3>
+      <p class="mr-sub">Duas curvas indo para lados opostos — o resultado que o projeto perseguia.</p>
+      <svg viewBox="0 0 600 210" role="img" aria-label="Investimento sobe 158% enquanto o custo por lead cai 74%">
+        <line x1="60" y1="180" x2="540" y2="180" stroke="rgba(176,162,255,.2)"/>
+        <text x="60" y="202" fill="#6B6885" font-size="12">Junho</text>
+        <text x="540" y="202" fill="#6B6885" font-size="12" text-anchor="end">Julho</text>
+        <path class="mr-path" d="M60,150 C220,140 380,70 540,30" fill="none" stroke="#B0A2FF" stroke-width="2.5" stroke-linecap="round" pathLength="1"/>
+        <circle cx="60" cy="150" r="4" fill="#B0A2FF"/><circle cx="540" cy="30" r="5" fill="#B0A2FF"/>
+        <text x="60" y="138" fill="#B0A2FF" font-size="12.5">investimento</text>
+        <text x="540" y="18" fill="#B0A2FF" font-size="13" text-anchor="end" font-weight="600">+158% de investimento</text>
+        <path class="mr-path b" d="M60,52 C220,62 380,132 540,162" fill="none" stroke="#6FE3A3" stroke-width="2.5" stroke-linecap="round" pathLength="1"/>
+        <circle cx="60" cy="52" r="4" fill="#6FE3A3"/><circle cx="540" cy="162" r="5" fill="#6FE3A3"/>
+        <text x="60" y="40" fill="#6FE3A3" font-size="12.5">custo por lead</text>
+        <text x="540" y="180" fill="#6FE3A3" font-size="13" text-anchor="end" font-weight="600">−74% no custo por lead</text>
+      </svg>
+    </div>
+
+    <div class="mr-grid">
+      <div class="mr-card"><p class="mr-k">Custo por lead</p>
+        <div class="mr-v">−74%</div>
+        <span class="mr-delta">com 158% a mais de verba</span></div>
+      <div class="mr-card"><p class="mr-k">Leads criados no CRM, por mês</p>
+        <div class="mr-v">+815%</div>
+        <span class="mr-delta">cerca de 9× o mês anterior</span></div>
+      <div class="mr-card"><p class="mr-k">Sessões no site</p>
+        <div class="mr-v">+155%</div>
+        <span class="mr-delta">85% vindas de mídia paga</span></div>
+      <div class="mr-card"><p class="mr-k">Taxa de engajamento no site</p>
+        <div class="mr-v"><span class="mr-from">15,1%</span><span class="mr-arrow">→</span>22,9%</div>
+        <span class="mr-delta">+7,9 p.p.</span></div>
+    </div>
+
+    <div class="mr-roi">
+      <div class="mr-big"><em>3,3×</em> de retorno confirmado sobre a mídia</div>
+      <p>Matrículas rastreadas até a origem — do anúncio ao aluno pagante — contando só o valor já lançado no CRM, nos dois primeiros meses. Pelo ticket médio da escola, o retorno projetado chegaria a cerca de 8×. Prefiro reportar o número confirmado.</p>
+    </div>
+
+    <p class="mr-src">Julho/2026 comparado a junho/2026. Fontes: Meta Ads, Meta Business Suite, Google Analytics 4 e Kommo CRM. Dados extraídos em 05/08/2026.</p>
+  </div>
+</section>
+
+<hr class="divide">
+
+<!-- 07 APRENDIZADO -->
+<section>
+  <div class="wrap reveal">
+    <span class="sec-num">07</span>
+    <h2>O que os dados apontaram depois</h2>
+    <p class="lead">O achado mais útil não foi o retorno. O volume cresceu mais rápido do que a capacidade de resposta: <strong>três em cada quatro leads ativos ainda aguardavam o primeiro contato.</strong></p>
+    <p>O gargalo tinha mudado de lugar: saiu da geração de demanda e foi para o atendimento. É um efeito esperado — uma equipe dimensionada para o ritmo anterior passou a receber, de um mês para o outro, muito mais conversas. Medir bem serve para isso: mostrar onde está o próximo passo do funil, mesmo quando ele fica fora do escopo original.</p>
+    <p>Ficou também uma limitação: uma mesma pessoa que chegava pelo site e depois voltava pelo WhatsApp gerava dois registros, inflando a contagem de leads. A causa apareceu depois — o WhatsApp entregava números de celular antigos sem o nono dígito, e o formulário gravava com ele. A deduplicação passou a comparar os dois formatos e juntou os registros repetidos. Esse mesmo problema foi o que me levou a construir o Capta.</p>
+  </div>
+</section>
+
+<hr class="divide">
+
+<!-- 08 SEGUNDO ATO -->
+<section>
+  <div class="wrap reveal">
+    <span class="sec-num">08</span>
+    <h2>O segundo ato: assumir o atendimento</h2>
+    <p class="lead">Com a origem marcada em cada lead, dava para comparar as portas de entrada pelo que importa: quantos viram aluno.</p>
+
+    <div class="doors" role="img" aria-label="Conversão em matrícula por porta de entrada: site 0,8%, WhatsApp com robô 2,4%, conversa com uma pessoa cerca de 41%">
+      <div class="door"><span class="door-k">Formulário do site</span><span class="door-bar"><i style="width:2%"></i></span><span class="door-v">0,8%</span></div>
+      <div class="door"><span class="door-k">WhatsApp com robô</span><span class="door-bar"><i style="width:5.8%"></i></span><span class="door-v">2,4%</span></div>
+      <div class="door hi"><span class="door-k">Conversa com uma pessoa</span><span class="door-bar"><i style="width:100%"></i></span><span class="door-v">~41%</span></div>
+    </div>
+    <p class="figcap" style="margin-bottom:26px">Conversão de lead em matrícula por porta de entrada, leads criados a partir de junho/2026, lidos em setembro/2026.</p>
+
+    <p>A diferença é grande demais para ser acaso — e tem uma ressalva que faço questão de dizer: o grupo atendido por uma pessoa é pequeno e, em boa parte, formado por leads mais antigos, de antes do robô e do formulário. Não é uma comparação limpa. Mas aponta na mesma direção da leitura anterior: <strong>é a conversa com uma pessoa que leva a família até a matrícula.</strong> Os leads captados em eventos reforçavam o ponto: eram contatos de alto interesse que precisavam de uma segunda conversa para avançar.</p>
+
+    <h3>A decisão</h3>
+    <p>Em vez de só aumentar o volume de leads, propus que a RISE assumisse também o atendimento, com parte da remuneração atrelada às matrículas. A escola concentra energia no que faz melhor: receber a família e conduzir o fechamento presencialmente.</p>
+
+    <div class="cards">
+      <div class="card"><h3>Uma caixa de conversa só</h3><p>WhatsApp, lead e etapa do funil na mesma tela, com alerta de tempo sem resposta ajustado à temperatura do lead.</p></div>
+      <div class="card"><h3>Fila de retomada</h3><p>Leads que esfriaram voltam em lotes pequenos, com mensagem pronta e horários com vaga de verdade.</p></div>
+      <div class="card"><h3>Recepção que registra</h3><p>Check-in e check-out em tablet no dia da aula experimental: a família avalia, diz se fecha e, se não fecha, por quê.</p></div>
+      <div class="card"><h3>Duas pessoas no mesmo funil</h3><p>A criança experimenta a aula; o responsável decide e paga. Cada etapa fala com quem decide ali.</p></div>
+    </div>
+    <p style="margin-top:22px">O motivo de não fechar era a peça que faltava: sem ele, o funil terminava num “perdido” sem explicação. Com ele, preço, distância e horário viram dados para a próxima decisão. Os resultados dessa fase estão em medição — publico quando houver um ciclo completo.</p>
+  </div>
+</section>
+
+<hr class="divide">
+
+<!-- 09 DADOS DE CRIANCAS -->
+<section>
+  <div class="wrap reveal">
+    <span class="sec-num">09</span>
+    <h2>Dados de crianças pedem outro cuidado</h2>
+    <p class="lead">Todo lead dessa escola traz informação sobre uma criança. Pela LGPD (art. 14) e pelo ECA Digital, isso exige consentimento específico de um responsável e o mínimo de dado possível.</p>
+    <p>O consentimento faz parte do fluxo em cada porta de entrada: formulário do site, app de eventos, WhatsApp e tablet da recepção. Quem aceita é o responsável, e o aceite fica registrado e ligado ao lead pelo telefone dele. O aceite obrigatório é separado do opt-in de promoções, e a política de privacidade tem página própria.</p>
+    <div class="quote">Para a mídia, a regra é simples: o que vai para as plataformas de anúncio é a faixa de idade da trilha — nunca um dado que identifique a criança.</div>
+    <p>Conversão e proteção não brigam aqui. O sinal que ajuda o algoritmo a achar novas famílias vem do responsável e do evento de conversão, não do nome de quem vai estudar.</p>
+  </div>
+</section>
+
+<hr class="divide">
+
+<footer>
+  <div class="wrap">
+    <p style="margin:0">Projeto conduzido pela <strong>RISE</strong>. Nome do cliente e valores absolutos omitidos por confidencialidade.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var bar=document.getElementById('progress');
+  function onScroll(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    bar.style.width=(h>0?(window.scrollY/h)*100:0)+'%';
+  }
+  window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.classList.add('in');
+        var s=e.target.closest('.mrres'); if(s) s.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+
+  document.getElementById('back').addEventListener('click',function(){
+    if(window.parent!==window){ window.parent.postMessage('closeCase','*'); }
+    else if(history.length>1){ history.back(); }
+    else { location.href='index.html'; }
+  });
+})();
+</script>
+</body>
+</html>
