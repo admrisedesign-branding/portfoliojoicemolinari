@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Case · O sistema visual do Capta — Joice Molinari</title>
+<meta name="description" content="Tokens, componentes e regras que sustentam 12 telas de um SaaS de captação de leads: cor com significado, campos legíveis, mobile e impressão. Estudo de caso por Joice Molinari.">
+<meta property="og:title" content="O sistema visual do Capta — um arquivo, doze telas">
+<meta property="og:description" content="Estudo de caso · Design System · Produto próprio.">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0B0B14; --ink:#EDEBF5; --soft:#B7B4CC; --dim:#6B6885;
+  --accent:#B0A2FF; --blue:#6E8CFF; --pink:#FF9ECF; --good:#6FE3A3;
+  --line:rgba(176,162,255,.18);
+  --wrap:840px;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"DM Sans",system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;}
+
+#progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:50;
+  background:linear-gradient(90deg,var(--blue),var(--accent),var(--pink));transition:width .1s linear;}
+
+.topbar{position:sticky;top:0;z-index:40;backdrop-filter:blur(10px);
+  background:rgba(11,11,20,.72);border-bottom:1px solid rgba(176,162,255,.1);}
+.topbar .inner{max-width:var(--wrap);margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:14px;}
+.back{appearance:none;background:none;border:1px solid var(--line);color:var(--soft);cursor:pointer;
+  font:inherit;font-size:13.5px;padding:7px 14px;border-radius:999px;transition:.2s;}
+.back:hover{color:#fff;border-color:var(--accent);}
+.back:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+.topbar .who{font-size:13px;color:var(--dim);margin-left:auto;}
+
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px;}
+section{padding:64px 0;}
+.divide{border:0;border-top:1px solid rgba(176,162,255,.12);margin:0;}
+
+.chero{padding:78px 0 34px;}
+.eyebrow{display:inline-block;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:18px;}
+h1{font-size:clamp(34px,6.4vw,60px);line-height:1.03;margin:0 0 20px;font-weight:600;letter-spacing:-.03em;}
+.tag{font-size:clamp(17px,2.3vw,21px);line-height:1.55;color:#D6D3E8;margin:0 0 30px;max-width:62ch;}
+.meta{display:flex;flex-wrap:wrap;gap:10px 26px;font-size:13.5px;color:var(--dim);}
+.meta b{color:var(--soft);font-weight:500;}
+
+.sec-num{display:block;font-size:12px;letter-spacing:.2em;color:var(--accent);margin-bottom:12px;}
+h2{font-size:clamp(26px,4.2vw,38px);line-height:1.12;margin:0 0 18px;font-weight:600;letter-spacing:-.02em;}
+h3{font-size:16px;margin:0 0 8px;font-weight:600;color:#fff;}
+p{line-height:1.68;color:var(--soft);font-size:16.5px;margin:0 0 16px;}
+.lead{font-size:clamp(17px,2.1vw,19.5px);color:#D6D3E8;}
+strong{color:#fff;font-weight:600;}
+.quote{margin:26px 0;padding:20px 22px;border-left:2px solid var(--accent);
+  background:linear-gradient(90deg,rgba(176,162,255,.07),transparent);
+  font-size:18px;line-height:1.5;color:#fff;}
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:24px;}
+.card{border:1px solid var(--line);border-radius:14px;padding:20px;background:rgba(255,255,255,.02);}
+.card p{font-size:14.5px;margin:0;}
+.figcap{margin:12px 2px 24px;font-size:13px;color:var(--dim);}
+
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.in{opacity:1;transform:none;}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}}
+
+footer{padding:56px 0 80px;color:var(--dim);font-size:13.5px;}
+footer a{color:var(--accent);}
+@media (max-width:640px){section{padding:52px 0;} .cards{grid-template-columns:1fr;}}
+
+/* ===== tokens em exibição ===== */
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:12px;margin:26px 0 0;}
+.sw{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:rgba(255,255,255,.02);}
+.sw i{display:block;height:54px;}
+.sw span{display:block;padding:9px 11px;font-size:12px;line-height:1.45;color:var(--soft);}
+.sw b{display:block;color:#fff;font-weight:600;font-size:12.5px;}
+.sw code{color:var(--dim);font-size:11.5px;}
+.scale{border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-top:22px;background:rgba(255,255,255,.02);}
+.scale div{display:flex;align-items:baseline;gap:14px;padding:7px 0;border-bottom:1px solid rgba(176,162,255,.08);}
+.scale div:last-child{border-bottom:0;}
+.scale em{font-style:normal;color:var(--dim);font-size:12px;min-width:92px;}
+.scale s{text-decoration:none;color:#fff;font-family:"Inter",sans-serif;}
+
+/* ===== demonstração: componentes reais do Capta ===== */
+.demo{margin:26px 0 0;border:1px solid var(--line);border-radius:16px;overflow:hidden;}
+.demo .dh{padding:10px 16px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);
+  border-bottom:1px solid var(--line);background:rgba(255,255,255,.02);}
+.ui{
+  --brand:#2E5BFF; --brand-deep:#1E44D6; --bgc:#F4F6FB; --cardc:#FFFFFF; --linec:#E9ECF3; --line2:#F1F3F8;
+  --inkc:#141A2E; --mutedc:#697089; --faintc:#9AA1B4;
+  --quente:#E03127; --quente-bg:rgba(224,49,39,.12);
+  --morno:#C47A08; --morno-bg:rgba(224,147,15,.14);
+  --frio:#3E6FD6; --frio-bg:rgba(91,141,239,.15);
+  --verde:#16A34A; --r:16px; --shadow:0 1px 2px rgba(20,26,46,.04),0 6px 20px rgba(20,26,46,.05);
+  background:var(--bgc);color:var(--inkc);font-family:"Inter",system-ui,sans-serif;font-size:14px;
+  padding:20px;display:flex;flex-wrap:wrap;gap:14px;align-items:flex-start;}
+.ui .btn{border:0;background:var(--brand);color:#fff;font-weight:700;font-size:12.5px;padding:8px 14px;border-radius:9px;font-family:inherit;}
+.ui .btn.g{background:var(--cardc);color:var(--mutedc);border:1px solid var(--linec);}
+.ui .btn.v{background:var(--verde);}
+.ui .btn.x{background:var(--quente-bg);color:var(--quente);}
+.ui .btn.sm{padding:5px 10px;font-size:12px;}
+.ui .btn.off{opacity:.45;}
+.ui .tag{font-size:11px;font-weight:700;padding:3px 9px;border-radius:99px;background:var(--line2);color:var(--mutedc);}
+.ui .tag.q{background:var(--quente-bg);color:var(--quente);}
+.ui .tag.m{background:var(--morno-bg);color:var(--morno);}
+.ui .tag.f{background:var(--frio-bg);color:var(--frio);}
+.ui .box{background:var(--cardc);border:1px solid var(--linec);border-radius:var(--r);box-shadow:var(--shadow);padding:16px 18px;flex:1 1 260px;min-width:0;}
+.ui .box h4{margin:0 0 4px;font-size:13.5px;font-weight:800;color:var(--mutedc);text-transform:uppercase;letter-spacing:.05em;}
+.ui .box .hint{font-size:12.5px;color:var(--faintc);margin-bottom:12px;}
+.ui table{width:100%;border-collapse:collapse;font-size:13px;}
+.ui th{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--faintc);font-weight:700;text-align:left;padding:8px 10px;border-bottom:1px solid var(--linec);}
+.ui td{padding:9px 10px;border-bottom:1px solid var(--line2);}
+.ui td.n,.ui th.n{text-align:right;font-variant-numeric:tabular-nums;}
+.ui tr:last-child td{border-bottom:0;}
+.ui .tally{background:var(--cardc);border:1px solid var(--linec);border-radius:14px;box-shadow:var(--shadow);padding:12px 18px;display:flex;gap:26px;flex-wrap:wrap;flex:1 1 100%;}
+.ui .tally b{font-size:22px;font-weight:800;margin-right:6px;}
+.ui .tally small{color:var(--mutedc);font-weight:600;font-size:12.5px;}
+.ui .tally .hot b{color:var(--morno);}
+.ui .tally .bad b{color:var(--quente);}
+.ui .tally .ok b{color:var(--verde);}
+.ui .campo{flex:1 1 240px;}
+.ui .campo label{display:block;font-size:12px;font-weight:600;color:var(--mutedc);margin-bottom:4px;}
+.ui .campo input{width:100%;border:1px solid #C4CBDA;border-radius:10px;padding:9px 11px;font-size:13px;color:#1B2233;background:#fff;font-family:inherit;}
+.ui .campo.antigo input{border-color:var(--linec);}
+.ui .campo .leg{font-size:11.5px;color:var(--faintc);margin-top:6px;}
+.ui .chip{border:1px solid var(--linec);background:var(--cardc);border-radius:99px;padding:5px 10px;font-size:12px;font-weight:600;color:var(--mutedc);}
+.ui .chip.on{background:var(--brand);border-color:var(--brand);color:#fff;}
+.ui .vazio{border:1px dashed var(--linec);border-radius:var(--r);padding:26px;text-align:center;color:var(--faintc);font-size:13.5px;flex:1 1 100%;}
+.ui .toast{background:#141A2E;color:#fff;border-radius:12px;padding:10px 14px;font-size:13px;display:flex;align-items:center;gap:12px;}
+.ui .toast.ok{background:#1F7A4D;}
+.ui .toast.err{background:#B3261E;}
+.ui .toast button{border:0;background:rgba(255,255,255,.16);color:#fff;font-weight:700;font-size:12px;padding:5px 10px;border-radius:8px;font-family:inherit;}
+.ui .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;flex:1 1 100%;}
+@media (max-width:640px){.ui{padding:14px;}}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<div class="topbar">
+  <div class="inner">
+    <button class="back" id="back">← Voltar</button>
+    <span class="who">Joice Molinari · Estudo de caso</span>
+  </div>
+</div>
+
+<header class="chero">
+  <div class="wrap reveal">
+    <span class="eyebrow">Estudo de caso · Design System · Produto próprio</span>
+    <h1>Um arquivo, doze telas</h1>
+    <p class="tag">O Capta é um SaaS de captação e gestão de leads que eu projetei e construí. Quando o produto passou de cinco para vinte telas, a cor e o espaçamento começaram a divergir de uma para outra. Extraí o que se repetia num único arquivo-base e transformei decisões soltas em regras com nome, para que a vigésima tela nascesse igual à primeira.</p>
+    <div class="meta">
+      <span><b>Papel:</b> do token ao componente · decisão, documentação e implementação</span>
+      <span><b>Produto:</b> Capta (produto próprio, em operação com cliente)</span>
+      <span><b>Escopo:</b> 1 arquivo-base · 12 telas · 157 linhas de CSS</span>
+      <span><b>Stack:</b> HTML/CSS/JS · sem framework de UI</span>
+    </div>
+  </div>
+</header>
+
+<hr class="divide">
+
+<section>
+  <div class="wrap reveal">
+    <span class="sec-num">01</span>
+    <h2>O problema: cada tela virou um dialeto</h2>
+    <p>As primeiras telas do Capta nasceram uma de cada vez, resolvendo um problema por vez: funil, leads, agenda, inbox. Cada uma trouxe o próprio azul, a própria altura de botão, o próprio cinza de borda. Nenhuma delas estava errada sozinha. Juntas, pareciam quatro produtos.</p>
+    <p>O custo apareceu na manutenção. Trocar o azul da marca virava uma caçada em vários arquivos. Uma tabela nova saía diferente da antiga. E o pior: um ajuste de legibilidade feito numa tela não chegava às outras, então o mesmo erro era corrigido três vezes.</p>
+    <div class="quote">Sistema não é sobre beleza. É sobre uma decisão valer para todas as telas, inclusive para a que ainda não existe.</div>
+  </div>
+</section>
+
+<hr class="divide">
+
+<section>
+  <div class="wrap reveal">
+    <span class="sec-num">02</span>
+    <h2>A base: tokens com significado</h2>
+    <p class="lead">Extraí as decisões de cor, raio e sombra para variáveis no topo de um arquivo único, que toda tela carrega antes do que é dela. Além das cores de marca e de superfície, o Capta tem um grupo que não é decorativo: <strong>a temperatura do lead</strong>.</p>
+    <div class="swatches">
+      <div class="sw"><i style="background:#2E5BFF"></i><span><b>Marca</b><code>--brand · #2E5BFF</code></span></div>
+      <div class="sw"><i style="background:#1E44D6"></i><span><b>Marca, pressionada</b><code>--brand-deep</code></span></div>
+      <div class="sw"><i style="background:#F4F6FB"></i><span><b>Fundo</b><code>--bg · #F4F6FB</code></span></div>
+      <div class="sw"><i style="background:#141A2E"></i><span><b>Texto</b><code>--ink · #141A2E</code></span></div>
+      <div class="sw"><i style="background:#697089"></i><span><b>Texto secundário</b><code>--muted</code></span></div>
+      <div class="sw"><i style="background:#E03127"></i><span><b>Lead quente</b><code>--quente</code></span></div>
+      <div class="sw"><i style="background:#C47A08"></i><span><b>Lead morno</b><code>--morno</code></span></div>
+      <div class="sw"><i style="background:#3E6FD6"></i><span><b>Lead frio</b><code>--frio</code></span></div>
+      <div class="sw"><i style="background:#16A34A"></i><span><b>Confirmado</b><code>--verde</code></span></div>
+    </div>
+    <p class="figcap">Cada cor de temperatura vem com o próprio fundo translúcido, para servir de etiqueta sem virar mancha.</p>
+    <p>A regra que ficou: <strong>vermelho, âmbar e azul não são estilo, são estado</strong>. Quente quer dizer que a pessoa pediu aula experimental; frio quer dizer que ela só estava pesquisando. Quem abre qualquer tela do produto lê a mesma cor com o mesmo significado, e a equipe passou a falar por cor no dia a dia.</p>
+
+    <h3 style="margin-top:34px">Tipografia e medida</h3>
+    <div class="scale">
+      <div><em>22 / 800</em><s style="font-size:22px;font-weight:800">Número em destaque</s></div>
+      <div><em>19 / 800</em><s style="font-size:19px;font-weight:800">Título da tela</s></div>
+      <div><em>16 / 700</em><s style="font-size:16px;font-weight:700">Título de janela</s></div>
+      <div><em>13,5 / 800</em><s style="font-size:13.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase">Título de bloco</s></div>
+      <div><em>14 / 400</em><s style="font-size:14px">Texto padrão da interface</s></div>
+      <div><em>12,5 / 600</em><s style="font-size:12.5px;font-weight:600;color:#B7B4CC">Apoio e rótulos</s></div>
+      <div><em>11 / 700</em><s style="font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#6B6885">Cabeçalho de tabela</s></div>
+    </div>
+    <p class="figcap">Inter, sete tamanhos, nada entre eles. Raio de 16px nos cartões, 9 a 10px nos controles, 99px nas etiquetas. Uma sombra só, usada em tudo que flutua.</p>
+  </div>
+</section>
+
+<hr class="divide">
+
+<section>
+  <div class="wrap reveal">
+    <span class="sec-num">03</span>
+    <h2>Os componentes que se repetem</h2>
+    <p>O arquivo-base cobre o que aparece em praticamente toda tela: botões, cartões, contadores, tabelas, etiquetas, campos, chips, estados vazios e avisos. Abaixo estão os componentes reais, com o mesmo código que roda no produto.</p>
+
+    <div class="demo">
+      <div class="dh">Botões e etiquetas</div>
+      <div class="ui">
+        <div class="row">
+          <button class="btn">Ação principal</button>
+          <button class="btn g">Secundária</button>
+          <button class="btn v">Confirmar</button>
+          <button class="btn x">Descartar</button>
+          <button class="btn sm">Pequena</button>
+          <button class="btn off">Indisponível</button>
+        </div>
+        <div class="row">
+          <span class="tag q">Quente</span>
+          <span class="tag m">Morno</span>
+          <span class="tag f">Frio</span>
+          <span class="tag">Sem classificação</span>
+          <span class="chip on">Este mês</span>
+          <span class="chip">Semana</span>
+          <span class="chip">Hoje</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="dh">Contador, cartão e tabela</div>
+      <div class="ui">
+        <div class="tally">
+          <span><b>128</b><small>leads no período</small></span>
+          <span class="hot"><b>34</b><small>aguardando resposta</small></span>
+          <span class="bad"><b>9</b><small>sem retorno há 48h</small></span>
+          <span class="ok"><b>12</b><small>matrículas</small></span>
+        </div>
+        <div class="box">
+          <h4>Origem</h4>
+          <div class="hint">De onde vieram os leads deste período</div>
+          <table>
+            <tr><th>Canal</th><th class="n">Leads</th><th class="n">Conversão</th></tr>
+            <tr><td>Formulário do site</td><td class="n">64</td><td class="n">0,8%</td></tr>
+            <tr><td>WhatsApp</td><td class="n">41</td><td class="n">2,4%</td></tr>
+            <tr><td>Evento</td><td class="n">23</td><td class="n">—</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="dh">Campo, estado vazio e aviso</div>
+      <div class="ui">
+        <div class="campo"><label>Nome do responsável</label><input value="Mariana Alves"><div class="leg">Borda visível, texto escuro, foco azul</div></div>
+        <div class="campo antigo"><label>Como era antes</label><input value="Mariana Alves"><div class="leg">Borda clara demais: o campo sumia no fundo</div></div>
+        <div class="vazio">Nenhum lead aguardando resposta agora.<br>Quando chegar um novo, ele aparece aqui.</div>
+        <div class="row">
+          <div class="toast ok">Lead movido para Aula agendada <button>Desfazer</button></div>
+          <div class="toast err">Não consegui salvar <button>Tentar de novo</button></div>
+        </div>
+      </div>
+    </div>
+    <p class="figcap">Componentes renderizados com o CSS do produto, não com imagens.</p>
+  </div>
+</section>
+
+<hr class="divide">
+
+<section>
+  <div class="wrap reveal">
+    <span class="sec-num">04</span>
+    <h2>As decisões que valem mais que as cores</h2>
+    <p class="lead">Um sistema se prova nos casos difíceis. Estes são os que me fizeram voltar ao arquivo-base e mudar a regra para todo mundo.</p>
+
+    <div class="cards">
+      <div class="card"><h3>O campo que sumia</h3><p>O cinza de divisória funcionava entre linhas de tabela, mas como borda de campo desaparecia: input branco sobre fundo claro. Criei um grupo próprio de tokens para formulário, com borda mais escura, estado de foco com anel azul e estado desabilitado. Uma correção, doze telas.</p></div>
+      <div class="card"><h3>O checkbox esticado</h3><p>A regra que fazia todo campo ocupar a largura inteira também esticava caixas de seleção e empurrava o rótulo para longe. A exceção virou regra escrita, em vez de gambiarra em cada tela.</p></div>
+      <div class="card"><h3>Número que não dança</h3><p>Colunas numéricas usam alinhamento à direita e fonte tabular. Sem isso, a coluna de valores tremia a cada atualização de dados e ficava difícil comparar linhas.</p></div>
+      <div class="card"><h3>Foco visível</h3><p>Todo elemento interativo tem contorno de foco com dois pixels e afastamento. É o que permite operar o painel inteiro pelo teclado, que é como quem atende rápido de fato trabalha.</p></div>
+      <div class="card"><h3>A mesma tela, dentro e fora</h3><p>Cada tela funciona sozinha e embutida no painel. Um modo específico esconde a barra e o botão de voltar quando ela está dentro, sem duplicar arquivo nem criar uma segunda versão para manter.</p></div>
+      <div class="card"><h3>Imprimir também é interface</h3><p>Ao imprimir, somem barras e botões, as sombras saem e os cartões não quebram no meio. O relatório mensal sai do próprio painel, sem exportar para outro lugar.</p></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divide">
+
+<section>
+  <div class="wrap reveal">
+    <span class="sec-num">05</span>
+    <h2>Celular em um arquivo à parte</h2>
+    <p>Quem usa o Capta no celular é a recepção, no meio do atendimento, com uma família na frente. Em vez de espalhar consultas de mídia por doze arquivos, criei um segundo arquivo carregado por último, que ajusta todas as telas de uma vez.</p>
+    <div class="cards">
+      <div class="card"><h3>Grades viram uma coluna</h3><p>Todo conjunto de cartões, campos e indicadores passa a uma coluna, e nada empurra a largura da tela.</p></div>
+      <div class="card"><h3>Tabelas rolam sozinhas</h3><p>Em vez de espremer colunas até ficarem ilegíveis, a tabela ganha rolagem horizontal e mantém cada linha inteira.</p></div>
+      <div class="card"><h3>Alvos de toque maiores</h3><p>Botões e chips passam a ter altura mínima de 38 pixels, e as ações principais da recepção ficam ainda maiores.</p></div>
+      <div class="card"><h3>Janelas em tela cheia</h3><p>Diálogos ocupam a largura toda, com cantos mais suaves e menos respiro lateral, como o usuário espera no celular.</p></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divide">
+
+<section>
+  <div class="wrap reveal">
+    <span class="sec-num">06</span>
+    <h2>Como ele se mantém vivo</h2>
+    <p>O arquivo é curto de propósito: cabe numa leitura. Os nomes são em português e descrevem a função, não a aparência: <strong>janela</strong>, <strong>campo</strong>, <strong>bloco</strong>, <strong>aviso</strong>, <strong>vazio</strong>. Assim, quem chega no produto entende sem tradução.</p>
+    <p>Cada decisão difícil está comentada no próprio arquivo, com o motivo e o sintoma que a gerou. A documentação mora junto do código, porque documento separado envelhece no dia em que alguém tem pressa. E a regra de convivência é uma só: <strong>se a mesma solução aparecer em duas telas, ela sobe para a base</strong>.</p>
+    <div class="quote">Escrever o porquê ao lado da regra é o que evita que a próxima pessoa, inclusive eu daqui a três meses, "conserte" o que já estava certo.</div>
+  </div>
+</section>
+
+<hr class="divide">
+
+<section>
+  <div class="wrap reveal">
+    <span class="sec-num">07</span>
+    <h2>O que isso é, e o que não é</h2>
+    <p>É um sistema pequeno, de um produto, mantido por uma pessoa. Cobre as doze telas do painel; as telas públicas, como o site, o login e o monitor de parede, ainda têm regras próprias e são o próximo alvo. Não tem biblioteca de componentes em Figma nem versionamento por pacote, porque nesta escala isso custaria mais do que resolve.</p>
+    <p>O que ele prova é o raciocínio: identificar o que se repete, dar nome, decidir uma vez, documentar o motivo e deixar o sistema absorver a próxima tela. É o mesmo trabalho que um design system de time grande exige, na escala em que ele precisava existir.</p>
+  </div>
+</section>
+
+<hr class="divide">
+
+<footer>
+  <div class="wrap">
+    <p style="margin:0">Capta · produto próprio, em operação com cliente. Sistema visual, produto e implementação por <strong>Joice Molinari</strong>.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var bar=document.getElementById('progress');
+  function onScroll(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    bar.style.width=(h>0?(window.scrollY/h)*100:0)+'%';
+  }
+  window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+
+  document.getElementById('back').addEventListener('click',function(){
+    if(window.parent!==window){ window.parent.postMessage('closeCase','*'); }
+    else if(history.length>1){ history.back(); }
+    else { location.href='index.html'; }
+  });
+})();
+</script>
+</body>
+</html>
