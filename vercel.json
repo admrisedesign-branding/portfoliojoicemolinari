@@ -1,0 +1,6 @@
+{
+  "redirects": [
+    { "source": "/midnight-mystery", "destination": "/", "permanent": false },
+    { "source": "/midnight-mystery/:path*", "destination": "/", "permanent": false }
+  ]
+}
